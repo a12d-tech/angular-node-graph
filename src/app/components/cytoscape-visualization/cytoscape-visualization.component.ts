@@ -1,21 +1,20 @@
-import { Component, Input, OnChanges, SimpleChanges, OnInit } from '@angular/core';
-import { CytoscapeVisualization } from '../shared/cytoscape-visualization';
-import { Tree, TreeNode } from '../shared/tree';
+import { Component, Input, OnChanges, SimpleChanges, OnInit, OnDestroy } from '@angular/core';
+import { CytoscapeVisualization, Tree } from '../../core';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-cytoscape-visualization',
   templateUrl: './cytoscape-visualization.component.html',
-  styleUrls: ['./cytoscape-visualization.component.css']
+  styleUrls: ['./cytoscape-visualization.component.scss']
 })
-export class CytoscapeVisualizationComponent<T> implements OnInit, OnChanges {
+export class CytoscapeVisualizationComponent<T> implements OnInit, OnChanges, OnDestroy {
 
   @Input()
   public tree: Tree<T>;
 
   @Input()
   public animateAlgo: Observable<Algorithm>;
-  
+
   private visualization: CytoscapeVisualization<T>;
   private animateAlgoSubscription: Subscription;
 
@@ -26,7 +25,7 @@ export class CytoscapeVisualizationComponent<T> implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(changes.tree) {
+    if (changes.tree) {
       if (changes.tree.isFirstChange) {
         this.visualization = new CytoscapeVisualization<T>(document.getElementById('cy'));
       }
@@ -41,23 +40,25 @@ export class CytoscapeVisualizationComponent<T> implements OnInit, OnChanges {
 
   private start(algo: Algorithm): void {
     console.log('start ' + algo);
+
+    this.breadthFirstSearch();
   }
 
   private breadthFirstSearch(): void {
-    let bfs = this.visualization.getGraph().elements().breadthFirstSearch('#a', function(){}, true);
+    const bfs = this.visualization.getGraph().elements().breadthFirstSearch({ root: '#a', directed: true });
 
     let i = 0;
-    let highlightNextEle = () => {
+    const highlightNextElement = () => {
       if (i < bfs.path.length){
         bfs.path[i].addClass('highlighted');
 
         i++;
-        setTimeout(highlightNextEle, 1000);
+        setTimeout(highlightNextElement, 1000);
       }
     };
 
     // kick off first highlight
-    highlightNextEle();
+    highlightNextElement();
   }
 
 }

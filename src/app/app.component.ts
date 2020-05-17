@@ -1,16 +1,13 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
-import { Tree, TreeNode } from '../shared/tree';
-import { CytoscapeVisualizationComponent } from '../cytoscape-visualization/cytoscape-visualization.component';
 import { Subject } from 'rxjs';
-
+import { Tree, TreeNode, Algorithm } from './core/graph';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'my-app',
+  selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: [ './app.component.css' ]
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-
   public tree: Tree<string>;
   public algorithm: Subject<Algorithm> = new Subject<Algorithm>();
 
@@ -24,7 +21,6 @@ export class AppComponent implements OnInit {
     console.log('delegate algo to CytoscapeVisualizationComponent');
     this.algorithm.next(algo);
   }
-
 
   private buildTree(): Tree<string> {
     const tree = new Tree<string>();
@@ -42,5 +38,4 @@ export class AppComponent implements OnInit {
 
     return tree.addRoot(nodeA);
   }
-
 }

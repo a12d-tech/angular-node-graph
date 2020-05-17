@@ -1,6 +1,6 @@
-import cytoscape, { ElementDefinition } from 'cytoscape';
-import { Tree, TreeNode, TreeEdge } from './tree';
-import { Tuple } from './tuple';
+import * as cytoscape from 'cytoscape';
+import { ElementDefinition } from 'cytoscape';
+import { Tree, TreeNode, TreeEdge, Tuple } from '../graph';
 
 export class CytoscapeVisualizationAdapter<T> {
 
@@ -10,7 +10,7 @@ export class CytoscapeVisualizationAdapter<T> {
     const tuple: Tuple<ElementDefinition[], ElementDefinition[]> = this.tree.getNodesAndEdges()
       .mapLeft((nodes: TreeNode<T>[]): ElementDefinition[] => this.getNodeElementDefinitions(nodes))
       .mapRight((edges: TreeEdge<T>[]): ElementDefinition[] => this.getEdgeElementDefinitions(edges));
-  
+
     return tuple.left.concat(tuple.right);
   }
 
@@ -27,8 +27,8 @@ export class CytoscapeVisualizationAdapter<T> {
   private getNodeElementDefinition(node: TreeNode<T>): ElementDefinition {
     return {
       group: 'nodes',
-      data: { 
-        id: node.value,
+      data: {
+        id: node.value as unknown as string,
       }
     };
   }
@@ -36,7 +36,7 @@ export class CytoscapeVisualizationAdapter<T> {
   private getEdgeElementDefinition(edge: TreeEdge<T>): ElementDefinition {
     return {
       group: 'edges',
-      data: { 
+      data: {
         id: `${edge.source.value}${edge.target.value}`,
         source: edge.source.value,
         target: edge.target.value,

@@ -1,10 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Algorithm } from '../shared/algo';
+import { Algorithm } from '../../core/graph/algo';
 
 @Component({
   selector: 'app-algorithm-manager',
   templateUrl: './algorithm-manager.component.html',
-  styleUrls: ['./algorithm-manager.component.css']
+  styleUrls: ['./algorithm-manager.component.scss']
 })
 export class AlgorithmManagerComponent implements OnInit {
 

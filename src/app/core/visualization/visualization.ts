@@ -1,4 +1,4 @@
-import { Tree } from './tree';
+import { Tree } from './../graph/tree';
 import { CytoscapeVisualization } from './cytoscape-visualization';
 
 export enum VisualizationType {
@@ -13,7 +13,7 @@ export class VisualizationFactory<U> {
   ): Visualization<U> {
     switch (visuType) {
       case VisualizationType.CYTO:
-        return new CytoscapeVisualization();
+        return; // new CytoscapeVisualization();
       default:
         console.error(`Visualization Type not recognized! ${visuType}`);
     }
