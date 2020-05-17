@@ -1,6 +1,12 @@
 # Angular Node Graph
 
-[Edit on StackBlitz ⚡️](https://stackblitz.com/edit/angular-node-graph)
+[DEMO](https://a12d-tech.github.io/angular-node-graph)
+
+## Deployment on Github pages
+
+`npm run build:gh-pages`
+
+---
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.1.
 
